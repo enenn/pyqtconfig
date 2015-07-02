@@ -628,20 +628,24 @@ class ConfigManagerBase(QObject):
                 return None
 
     # Get config
-    def get(self, key):
+    def get(self, key, default=None):
         """ 
             Get config value for a given key from the config manager.
             
-            Returns the value that matches the supplied key. If the value is not set a
-            default value will be returned as set by set_defaults.
+            Returns the value that matches the supplied key. If the value is not
+            set a default value will be returned. Depending if default is not None
+            default will be returned. Otherwise as set by set_defaults.
             
-            :param key: The configuration key to return a config value for
-            :type key: str
+            :param str key: The configuration key to return a config value for
+            :param default: Default value to return
             :rtype: Any supported (str, int, bool, list-of-supported-types)
+
         """
         v = self._get(key)
         if v is not None:
             return v
+        elif default is not None:
+            return default
         else:
             return self._get_default(key)
 
